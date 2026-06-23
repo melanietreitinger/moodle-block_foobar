@@ -24,6 +24,6 @@
 
 $string['foobar'] = 'foobar';
 $string['foobar:addinstance'] = 'Add a new foobar block';
-$string['metric:block_used_count_desc'] = 'The number of times this block is used.';
+$string['metric:block_used_count_desc'] = 'The number of times this block is used per category.';
 $string['pluginname'] = 'foobar';
 $string['privacy:metadata'] = 'The foobar block only shows data stored in other locations.';

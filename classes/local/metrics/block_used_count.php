@@ -53,12 +53,19 @@ class block_used_count extends metric
      */
     public function calculate(metric_config|null $config = null): array {
         global $DB;
-        return [
-            new metric_value(
-                $DB->count_records(
-                    'block_instances',
-                    ['blockname' => 'foobar']
-                )
-            )];
+        $returnrarray = [];
+
+        // Note: first column must be unique.
+        $sql = 'SELECT cs.category, COUNT(1) count FROM {block_instances} bi
+                    LEFT JOIN {context} c ON bi.parentcontextid = c.id
+                    LEFT JOIN {course} cs ON c.instanceid = cs.id
+                    WHERE blockname="foobar"
+                    GROUP BY cs.category';
+        $res = $DB->get_records_sql($sql);
+
+        foreach ($res as $row) {
+            $returnrarray[] = new metric_value($row->count, ['category' => $row->category]);
+        }
+        return $returnrarray;
     }
 }
